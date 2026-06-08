@@ -1,0 +1,463 @@
+/* CSSカスタムプロパティ（テーマカラーとサイズ） */
+:root {
+  --color-primary: #4bc0c0;
+  --color-primary-dark: #3aa0a0;
+  --color-accent: #ff9f40;
+  --color-bg: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-text: #2d3748;
+  --color-text-secondary: #718096;
+  --color-border: #e2e8f0;
+  --color-error: #fc8181;
+  --color-success: #68d391;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* リセットとベース */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* アプリ全体レイアウト */
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ヘッダー */
+.app-header {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  padding: 24px 20px 20px;
+  text-align: center;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.app-subtitle {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* タブナビゲーション */
+.tab-nav {
+  display: flex;
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px 8px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-btn--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.tab-btn:hover:not(.tab-btn--active) {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* メインコンテンツ */
+.app-main {
+  flex: 1;
+  padding: 20px 16px;
+}
+
+/* セクションタイトル */
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+/* ========= アップロードセクション ========= */
+.upload-section {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.drop-zone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--color-surface);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop-zone:hover {
+  border-color: var(--color-primary);
+  background: rgba(75, 192, 192, 0.04);
+}
+
+.drop-zone--loading {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.file-input {
+  display: none;
+}
+
+.drop-zone-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.drop-zone-icon {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.drop-zone-hint p {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.drop-zone-sub {
+  font-size: 12px !important;
+  color: var(--color-border) !important;
+}
+
+/* ローディングスピナー */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-text-secondary);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* レシートプレビュー */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.receipt-preview {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.preview-hint {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* エラーメッセージ */
+.error-message {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(252, 129, 129, 0.1);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-sm);
+  color: #c53030;
+  font-size: 13px;
+}
+
+/* ========= 支出一覧 ========= */
+.filter-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.total-display {
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  box-shadow: var(--shadow);
+}
+
+.total-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.total-count {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* 支出カード */
+.expense-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.expense-card {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  position: relative;
+  border-left: 4px solid var(--color-primary);
+}
+
+.expense-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.expense-category-badge {
+  font-size: 12px;
+  padding: 3px 8px;
+  background: var(--color-bg);
+  border-radius: 100px;
+  color: var(--color-text-secondary);
+}
+
+.expense-date {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.expense-card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-store {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.expense-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* 商品明細 */
+.expense-items {
+  margin-top: 10px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 8px;
+}
+
+.expense-items summary {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.item-list {
+  list-style: none;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 2px 0;
+}
+
+.item-name {
+  color: var(--color-text-secondary);
+}
+
+.item-price {
+  font-weight: 500;
+}
+
+/* 削除ボタン */
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--color-border);
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.delete-btn:hover {
+  background: rgba(252, 129, 129, 0.15);
+  color: var(--color-error);
+}
+
+/* ========= グラフセクション ========= */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.chart-container {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.chart-total {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.pie-chart-wrapper,
+.bar-chart-wrapper {
+  max-width: 100%;
+  position: relative;
+}
+
+/* ========= 空の状態 ========= */
+.empty-state {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--color-text-secondary);
+}
+
+.empty-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.empty-sub {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* ========= 通知トースト ========= */
+.notification-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  animation: slideUp 0.3s ease;
+  white-space: nowrap;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* フッター */
+.app-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
